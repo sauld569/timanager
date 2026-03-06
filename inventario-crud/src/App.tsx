@@ -28,7 +28,7 @@ import Register from "./components/Register";
 import UsuarioConfig from "./pages/UsuarioConfig";
 import Vehiculos from "./pages/Vehiculos";
 import { jwtDecode } from 'jwt-decode';
-import SessionTimeout from './components/SessionTimeout';
+// import SessionTimeout from './components/SessionTimeout'; // Desactivado - No logout automático
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -175,11 +175,12 @@ function App() {
 
   return (
     <>
-      <SessionTimeout 
+      {/* SessionTimeout desactivado - No logout automático por inactividad */}
+      {/* <SessionTimeout 
         token={token} 
         onLogout={handleLogout} 
         timeoutMs={90 * 60 * 1000} // 1.5 horas de inactividad
-      />
+      /> */}
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
