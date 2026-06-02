@@ -49,8 +49,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
         username: user.username,
         isAdmin: user.isAdmin 
       }, 
-      process.env.JWT_SECRET || 'secret', 
-      { expiresIn: '2h' }
+      process.env.JWT_SECRET || 'secret'
     );
     console.log('Token generado para:', {
       username: user.username,
