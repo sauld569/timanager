@@ -10,6 +10,8 @@ export interface IColaborador extends Document {
   fechaAltaIMSS: Date;
   razonSocialId: mongoose.Types.ObjectId;
   activo: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const ColaboradorSchema: Schema = new Schema({
