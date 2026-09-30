@@ -92,10 +92,12 @@ function App() {
           localStorage.removeItem('token');
           setToken(null);
           setUsername(null);
-          toast.error('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.', {
-            position: "top-center",
-            autoClose: 4000,
-          });
+          if (window.location.pathname !== '/login') {
+            toast.error('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.', {
+              position: "top-center",
+              autoClose: 4000,
+            });
+          }
           navigate('/login');
         } else {
           // Token válido, decodificar para obtener username

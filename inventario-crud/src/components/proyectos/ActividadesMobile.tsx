@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Button, Modal, Accordion } from 'react-bootstrap';
+import { Badge, Button, Modal } from 'react-bootstrap';
 import { Actividad, Colaborador, Proyecto } from '../../types';
 import ActividadModal from './ActividadModal';
 import ActividadViewModal from './ActividadViewModal';

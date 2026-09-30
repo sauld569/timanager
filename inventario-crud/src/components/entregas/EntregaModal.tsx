@@ -540,7 +540,6 @@ const EntregaModal = ({
                     type="text"
                     value={formData.numeroEntrega}
                     onChange={(e) => setFormData(prev => ({ ...prev, numeroEntrega: e.target.value }))}
-                    readOnly={!editingEntrega}
                     style={{ fontSize: '0.875rem', padding: '0.375rem 0.75rem' }}
                   />
                 </Form.Group>

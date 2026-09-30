@@ -76,12 +76,12 @@ export const TablaProductos: React.FC<TablaProductosProps> = ({
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#E55A2B';
-              e.target.style.borderColor = '#E55A2B';
+              e.currentTarget.style.backgroundColor = '#E55A2B';
+              e.currentTarget.style.borderColor = '#E55A2B';
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#FF6B35';
-              e.target.style.borderColor = '#FF6B35';
+              e.currentTarget.style.backgroundColor = '#FF6B35';
+              e.currentTarget.style.borderColor = '#FF6B35';
             }}
           >
             <i className="fas fa-percent me-2"></i>
@@ -97,12 +97,12 @@ export const TablaProductos: React.FC<TablaProductosProps> = ({
             transition: 'all 0.3s ease'
           }}
           onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#138496';
-            e.target.style.borderColor = '#138496';
+            e.currentTarget.style.backgroundColor = '#138496';
+            e.currentTarget.style.borderColor = '#138496';
           }}
           onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#17A2B8';
-            e.target.style.borderColor = '#17A2B8';
+            e.currentTarget.style.backgroundColor = '#17A2B8';
+            e.currentTarget.style.borderColor = '#17A2B8';
           }}
         >
           <i className="fas fa-plus me-2"></i>

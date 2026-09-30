@@ -27,8 +27,8 @@ interface OrdenCompraFormProps {
 const OrdenCompraForm: React.FC<OrdenCompraFormProps> = ({ show, onHide, editId, onOrdenCreada, proyectos }) => {
   // Estados para notificaciones
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVariant, setToastVariant] = useState<'success' | 'danger' | 'warning'>('warning');
+  const [toastMessage] = useState("");
+  const [toastVariant] = useState<'success' | 'danger' | 'warning'>('warning');
 
   // Estados del formulario
   const [numeroOrden, setNumeroOrden] = useState("");
@@ -548,50 +548,6 @@ const OrdenCompraForm: React.FC<OrdenCompraFormProps> = ({ show, onHide, editId,
       );
     } finally {
       setProcesando(false);
-    }
-  };
-
-  // Procesar PDF con detección automática del proveedor
-  const crearOrdenDesdePdf = async (pdf: File, proveedorId: string, razonSocialId: string, vendedorId?: string): Promise<any> => {
-    const formData = new FormData();
-    formData.append('pdf', pdf);
-    formData.append('proveedor', proveedorId);
-    formData.append('razonSocial', razonSocialId);
-    if (vendedorId) {
-      formData.append('vendedor', vendedorId);
-    }
-    if (direccionEnvioSeleccionada !== null && razonSocialSeleccionada?.direccionEnvio[direccionEnvioSeleccionada]) {
-      formData.append('direccionEnvio', JSON.stringify({
-        indice: direccionEnvioSeleccionada,
-        ...razonSocialSeleccionada.direccionEnvio[direccionEnvioSeleccionada]
-      }));
-    }
-    if (proyectoSeleccionado) {
-      formData.append('proyecto', proyectoSeleccionado);
-    }
-
-    try {
-      const response = await axios.post(`${urlServer}ordenes-compra/crear-desde-pdf`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      return response.data;
-    } catch (error) {
-      console.error('Error al crear orden desde PDF:', error);
-      
-      // Verificar si es un error de OpenAI quota exceeded
-      if ((error as any).response?.data?.type === 'OPENAI_QUOTA_EXCEEDED') {
-        throw new Error('OPENAI_QUOTA_EXCEEDED');
-      }
-      
-      // Verificar si es un error de OpenAI processing failed
-      if ((error as any).response?.data?.type === 'OPENAI_PROCESSING_FAILED') {
-        throw new Error('OPENAI_PROCESSING_FAILED');
-      }
-      
-      throw new Error('Error al crear la orden desde el archivo PDF. Verifique que el archivo sea válido y que el proveedor sea compatible.');
     }
   };
 

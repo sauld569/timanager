@@ -22,7 +22,10 @@ let isRedirecting = false;
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && (error.response.status === 401 || error.response.status === 403) && !isRedirecting) {
+    const requestUrl = error.config?.url || '';
+    const isAuthEndpoint = /\/auth\/(login|register|verify-token)(?:$|\?)/.test(requestUrl);
+
+    if (error.response && (error.response.status === 401 || error.response.status === 403) && !isAuthEndpoint && !isRedirecting) {
       isRedirecting = true;
       
       // Limpiar datos de autenticación

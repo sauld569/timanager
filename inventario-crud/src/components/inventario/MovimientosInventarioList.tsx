@@ -1,6 +1,6 @@
 // src/components/inventario/MovimientosInventarioList.tsx
 import React, { useState, useEffect } from 'react';
-import { Button, Col, Form, Modal, Row, Table } from 'react-bootstrap';
+import { Button, Col, Form, Row, Table } from 'react-bootstrap';
 import axios from '../../utils/axios-config';
 import { IInventoryMovement } from '../../types';
 import ExportExcelButton from '../common/ExportExcelButton';

@@ -112,18 +112,6 @@ const CotizacionCanalizacionList: React.FC = () => {
     window.open(`/api/cotizaciones-canalizacion/${cotizacion._id}/pdf/descargar`, "_blank");
   };
 
-  // Alternativa: Exportar PDF con jsPDF (frontend)
-  const handleExportarPdfLocal = async (cotizacion: CotizacionCanalizacion) => {
-    try {
-      // Importar dinámicamente para evitar errores si no está instalado
-      const { exportarCotizacionPDF } = await import('../../utils/pdfExporter');
-      exportarCotizacionPDF(cotizacion);
-    } catch (error) {
-      console.log('jsPDF no disponible, usando backend...');
-      handleDescargarPdf(cotizacion);
-    }
-  };
-
   // Funciones CRUD
   const generatePresupuestoNumber = () => {
     const maxNumber = cotizaciones.reduce((max, cotizacion) => {

@@ -40,7 +40,7 @@ import vehiculosRoutes from './routes/vehiculos';
 dotenv.config();
 const app: Application = express();
 app.use(cors({
-  origin: ['http://localhost', 'http://localhost:80', 'http://localhost:5173', 'http://192.168.100.150', 'http://192.168.100.150:80', 'http://www.timanager.com'],
+  origin: ['http://localhost', 'http://localhost:80', 'http://localhost:5173', 'http://192.168.100.150', 'http://192.168.100.150:80', 'http://timanager.com', 'http://www.timanager.com', 'https://timanager.com', 'https://www.timanager.com'],
   credentials: true
 }));
 app.use(express.json());

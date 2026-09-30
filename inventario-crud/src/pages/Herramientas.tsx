@@ -17,9 +17,12 @@ interface Herramienta {
   marca: string;
   modelo: string;
   valor: number;
+  cantidad: number;
   serialNumber: string;
   fechaAsignacion: string;
 }
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Herramientas: React.FC = () => {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
@@ -42,7 +45,7 @@ const Herramientas: React.FC = () => {
 
   const fetchColaboradores = async () => {
     try {
-      const response = await axios.get<Colaborador[]>('http://localhost:6051/api/colaboradores');
+      const response = await axios.get<Colaborador[]>(`${API_URL}colaboradores`);
       if (Array.isArray(response.data)) {
         setColaboradores(response.data);
       } else {
@@ -60,7 +63,7 @@ const Herramientas: React.FC = () => {
   const fetchHerramientas = async (colaboradorId: string) => {
     try {
       const response = await axios.get<Herramienta[]>(
-        `http://localhost:6051/api/herramientas/colaborador/${colaboradorId}`
+        `${API_URL}herramientas/colaborador/${colaboradorId}`
       );
       setHerramientas(prev => ({
         ...prev,
@@ -98,7 +101,7 @@ const Herramientas: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <img 
                   src={colaborador.fotografia ? 
-                    `http://localhost:6051/api/colaboradores/foto/${colaborador.fotografia.split('/').pop()}` 
+                    `${API_URL}colaboradores/foto/${colaborador.fotografia.split('/').pop()}` 
                     : '/test.png'
                   } 
                   alt={colaborador.nombre}

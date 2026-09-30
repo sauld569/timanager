@@ -60,11 +60,6 @@ interface ColaboradorResponse extends ColaboradorBase {
 
 type Colaborador = ColaboradorCreate | ColaboradorResponse;
 
-// Función auxiliar para validar si un objeto es RazonSocial
-function isRazonSocial(obj: any): obj is RazonSocial {
-  return obj && typeof obj === 'object' && '_id' in obj && 'nombre' in obj;
-}
-
 // Función para validar y formatear NSS
 const parseNSS = (value: string): string => {
   return value.replace(/\D/g, '').substring(0, 11);

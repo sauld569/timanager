@@ -90,7 +90,7 @@ const CotizacionModal = ({
   // Estados para productos
   const [productSuggestions, setProductSuggestions] = useState<{[key: number]: IInventoryItem[]}>({});
   const [showProductSuggestions, setShowProductSuggestions] = useState<{[key: number]: boolean}>({}); 
-  const [activeRow, setActiveRow] = useState<number | null>(null);
+  const [, setActiveRow] = useState<number | null>(null);
   
   // Estados para drag & drop
   const [draggedItem, setDraggedItem] = useState<number | null>(null);

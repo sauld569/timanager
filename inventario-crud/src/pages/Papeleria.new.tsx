@@ -28,6 +28,7 @@ interface EditDocumentState {
   documento: Documento | null;
   colaboradorId: string;
 }
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Papeleria: React.FC = () => {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
@@ -46,7 +47,7 @@ const Papeleria: React.FC = () => {
 
   const fetchColaboradores = async () => {
     try {
-      const response = await axios.get<Colaborador[]>('http://localhost:6051/api/colaboradores');
+        const response = await axios.get<Colaborador[]>(`${API_URL}colaboradores`);
       if (Array.isArray(response.data)) {
         setColaboradores(response.data);
       } else {
@@ -61,7 +62,7 @@ const Papeleria: React.FC = () => {
 
   const fetchDocumentos = async (colaboradorId: string) => {
     try {
-      const response = await axios.get<Documento[]>(`http://localhost:6051/api/documentos/colaborador/${colaboradorId}`);
+        const response = await axios.get<Documento[]>(`${API_URL}documentos/colaborador/${colaboradorId}`);
       setDocumentos(prev => ({
         ...prev,
         [colaboradorId]: response.data
@@ -101,7 +102,7 @@ const Papeleria: React.FC = () => {
         formData.append('fechaVencimiento', values.fechaVencimiento.toISOString());
       }
 
-      await axios.post('http://localhost:6051/api/documentos', formData, {
+        await axios.post(`${API_URL}documentos`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -119,7 +120,7 @@ const Papeleria: React.FC = () => {
 
   const handleDeleteDocument = async (documentId: string, colaboradorId: string) => {
     try {
-      await axios.delete(`http://localhost:6051/api/documentos/${documentId}`);
+        await axios.delete(`${API_URL}documentos/${documentId}`);
       message.success('Documento eliminado correctamente');
       fetchDocumentos(colaboradorId);
     } catch (error) {
@@ -142,8 +143,8 @@ const Papeleria: React.FC = () => {
         formData.append('fechaVencimiento', values.fechaVencimiento.toISOString());
       }
 
-      await axios.put(
-        `http://localhost:6051/api/documentos/${editModalState.documento?._id}`, 
+        await axios.put(
+          `${API_URL}documentos/${editModalState.documento?._id}`, 
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -218,9 +219,9 @@ const Papeleria: React.FC = () => {
               }
             >
               <p>
-                {doc.tipo === 'pdf' ? <FileOutlined /> : <PictureOutlined />}
-                <a 
-                  href={`http://localhost:6051/api/documentos/ver/${doc.url.split('/').pop()}`} 
+                  {doc.tipo === 'pdf' ? <FileOutlined /> : <PictureOutlined />}
+                  <a 
+                    href={`${API_URL}documentos/ver/${doc.url.split('/').pop()}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   style={{ marginLeft: '8px' }}

@@ -13,23 +13,10 @@ interface Herramienta {
   fechaAsignacion: string;
 }
 
-interface ApiError {
-  message: string;
-  status: number;
-}
-
 interface UseHerramientasProps {
   colaboradorId: string;
   onHerramientasChange: () => void;
   isAdmin?: boolean; // Nuevo prop para identificar si el usuario es admin
-}
-
-interface HerramientaFormData {
-  nombre: string;
-  marca: string;
-  modelo: string;
-  valor: number;
-  serialNumber: string;
 }
 
 export const useHerramientas = ({ colaboradorId, onHerramientasChange, isAdmin = false }: UseHerramientasProps) => {

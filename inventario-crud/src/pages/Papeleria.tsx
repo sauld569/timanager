@@ -29,6 +29,7 @@ interface EditDocumentState {
   colaboradorId: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 const Papeleria: React.FC = () => {
@@ -47,7 +48,7 @@ const Papeleria: React.FC = () => {
 
   const fetchColaboradores = async () => {
     try {
-      const response = await axios.get<Colaborador[]>('http://localhost:6051/api/colaboradores');
+      const response = await axios.get<Colaborador[]>(`${API_URL}colaboradores`);
       console.log('Respuesta colaboradores:', response.data);
       if (Array.isArray(response.data)) {
         setColaboradores(response.data);
@@ -65,7 +66,7 @@ const Papeleria: React.FC = () => {
 
   const fetchDocumentos = async (colaboradorId: string) => {
     try {
-      const response = await axios.get<Documento[]>(`http://localhost:6051/api/documentos/colaborador/${colaboradorId}`);
+      const response = await axios.get<Documento[]>(`${API_URL}documentos/colaborador/${colaboradorId}`);
       setDocumentos(prev => ({
         ...prev,
         [colaboradorId]: response.data
@@ -116,7 +117,7 @@ const Papeleria: React.FC = () => {
       });
 
       // Agregar headers específicos para multipart/form-data
-      const response = await axios.post('http://localhost:6051/api/documentos', formData, {
+      const response = await axios.post(`${API_URL}documentos`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -137,7 +138,7 @@ const Papeleria: React.FC = () => {
 
   const handleDeleteDocument = async (documentId: string, colaboradorId: string) => {
     try {
-      await axios.delete(`documentos/${documentId}`);
+      await axios.delete(`${API_URL}documentos/${documentId}`);
       message.success('Documento eliminado correctamente');
       fetchDocumentos(colaboradorId);
     } catch (error) {
@@ -162,7 +163,7 @@ const Papeleria: React.FC = () => {
       }
 
       await axios.put(
-        `http://localhost:6051/api/documentos/${editModalState.documento?._id}`, 
+        `${API_URL}documentos/${editModalState.documento?._id}`, 
         formData,
         {
           headers: {
@@ -207,7 +208,7 @@ const Papeleria: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <img 
                   src={colaborador.fotografia ? 
-                    `http://localhost:6051/api/colaboradores/foto/${colaborador.fotografia.split('/').pop()}` 
+                    `${API_URL}colaboradores/foto/${colaborador.fotografia.split('/').pop()}` 
                     : '/test.png'
                   } 
                   alt={colaborador.nombre}
@@ -272,7 +273,7 @@ const Papeleria: React.FC = () => {
                     <p>
                       {doc.tipo === 'pdf' ? <FileOutlined /> : <PictureOutlined />}
                       <a 
-                        href={`http://localhost:6051/api/documentos/ver/${doc.url.split('/').pop()}`} 
+                        href={`${API_URL}documentos/ver/${doc.url.split('/').pop()}`} 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         style={{ marginLeft: '8px' }}
@@ -280,7 +281,7 @@ const Papeleria: React.FC = () => {
                           console.log('Documento completo:', doc);
                           console.log('URL original:', doc.url);
                           console.log('Nombre del archivo:', doc.url.split('/').pop());
-                          console.log('URL final:', `http://localhost:6051/api/documentos/ver/${doc.url.split('/').pop()}`);
+                          console.log('URL final:', `${API_URL}documentos/ver/${doc.url.split('/').pop()}`);
                         }}
                       >
                         Ver documento

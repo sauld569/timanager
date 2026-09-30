@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'antd';
 import type { ModalProps } from 'antd';
 import './ModalContainer.css';
@@ -19,16 +19,6 @@ export const ModalContainer: React.FC<ModalContainerProps> = ({
   ...props 
 }) => {
   const [modalId] = useState(() => ++globalModalCount);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (open) {
-      setIsVisible(true);
-    } else {
-      const timer = setTimeout(() => setIsVisible(false), 300); // Duración de la animación
-      return () => clearTimeout(timer);
-    }
-  }, [open]);
 
   const baseZIndex = 1000;
   const calculatedZIndex = providedZIndex || baseZIndex + modalId * 10;

@@ -42,7 +42,7 @@ const OrdenCompraList: React.FC = () => {
   // Cargar proyectos
   const fetchProyectos = async () => {
     try {
-      const response = await axios.get(`${urlServer}proyectos/`);
+      const response = await axios.get<Proyecto[]>(`${urlServer}proyectos/`);
       setProyectos(response.data);
     } catch (error) {
       console.error("Error al cargar proyectos:", error);

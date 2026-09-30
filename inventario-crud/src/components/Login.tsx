@@ -23,11 +23,6 @@ export default function Login({ onLogin }: { onLogin: (token: string, username: 
       console.log('Intentando iniciar sesión con:', username);
       const res = await axios.post<LoginResponse>(`${API_URL}login`, { username, password });
       
-      // Decodificar el token para obtener la información del usuario
-      const token = res.data.token;
-      const [headerB64, payloadB64] = token.split('.');
-      const payload = JSON.parse(atob(payloadB64));
-      
       // Si el usuario es 'admin', establecer isAdmin en true
       if (username.toLowerCase() === 'admin') {
         localStorage.setItem('isAdmin', 'true');

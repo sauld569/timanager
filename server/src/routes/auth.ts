@@ -30,9 +30,10 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
 
 // Login de usuario
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body;
+  const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
+  const password = typeof req.body.password === 'string' ? req.body.password : '';
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: new RegExp(`^${escapeRegExp(username)}$`, 'i') });
     if (!user) {
       res.status(401).json({ message: 'Credenciales inválidas' });
       return;
@@ -61,6 +62,10 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 });
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 // Verificar token
 router.get('/verify-token', authMiddleware, async (req: Request, res: Response): Promise<void> => {

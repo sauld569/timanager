@@ -25,7 +25,7 @@ const RequestModal: React.FC<RequestModalProps> = ({
   const onFieldsChange = async () => {
     try {
       // Validar todos los campos
-      const values = await form.validateFields();
+      await form.validateFields();
       setFormValid(true);
     } catch (error) {
       setFormValid(false);

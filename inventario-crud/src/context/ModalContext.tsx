@@ -14,7 +14,7 @@ export const ModalContext = createContext<ModalContextType>({
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [modalCount, setModalCount] = useState(0);
-  const [activeModals, setActiveModals] = useState<number[]>([]);
+  const [, setActiveModals] = useState<number[]>([]);
 
   const registerModal = () => {
     const newId = Date.now();
