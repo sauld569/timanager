@@ -8,13 +8,14 @@ const router = express.Router();
 
 // Registro de usuario
 router.post('/register', async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body;
+  const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
+  const password = typeof req.body.password === 'string' ? req.body.password : '';
   if (!username || !password) {
     res.status(400).json({ message: 'Usuario y contraseña requeridos' });
     return;
   }
   try {
-    const userExists = await User.findOne({ username });
+    const userExists = await User.exists({ username: new RegExp(`^${escapeRegExp(username)}$`, 'i') });
     if (userExists) {
       res.status(409).json({ message: 'El usuario ya existe' });
       return;
@@ -33,13 +34,15 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
   const password = typeof req.body.password === 'string' ? req.body.password : '';
   try {
-    const user = await User.findOne({ username: new RegExp(`^${escapeRegExp(username)}$`, 'i') });
-    if (!user) {
-      res.status(401).json({ message: 'Credenciales inválidas' });
-      return;
+    const users = await User.find({ username: new RegExp(`^${escapeRegExp(username)}$`, 'i') });
+    let user = null;
+    for (const candidate of users) {
+      if (await bcrypt.compare(password, candidate.password)) {
+        user = candidate;
+        break;
+      }
     }
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
+    if (!user) {
       res.status(401).json({ message: 'Credenciales inválidas' });
       return;
     }
